@@ -1,0 +1,25 @@
+`timescale 1ns / 1ps
+
+module tb_echo();
+    bit clk,rst;
+    logic [7:0]tx_data=9'b10010110;
+    logic act,busy,tx,tx_line,rx,err;
+    
+    assign rx=tx_line;
+    always #5ns clk<=!clk;
+    
+    initial begin
+        rst<=1;
+        #20ns
+        rst<=0;
+        #20ns
+        act<=1;
+        #20ns
+        act<=0;
+        #30us
+        $finish;
+    end
+    
+    tx tx_unit(.*);
+    uart_echo top(.*);
+endmodule
